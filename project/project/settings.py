@@ -33,6 +33,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # Application definition
 
 INSTALLED_APPS = [
+    'api',
     'main',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,8 +79,18 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wordlas',
+        'USER': 'admin',
+        'PASSWORD': 'PostgresDevPassword',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'ATOMIC_REQUESTS': True,
+        'CONN_MAX_AGE': 60,
+        'OPTIONS': {
+            'connect_timeout': 10,
+            'client_encoding': 'UTF8'
+        },
     }
 }
 
