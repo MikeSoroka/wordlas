@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-sxvcvixu(6%+7zzod_k7m8_qkn3+3#t*ng7@ixe5)evzfr3e^a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1']
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'wordlas',
         'USER': 'admin',
         'PASSWORD': 'PostgresDevPassword',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
         'ATOMIC_REQUESTS': True,
         'CONN_MAX_AGE': 60,
