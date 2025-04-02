@@ -11,13 +11,20 @@
     </head>
 
     <body>
-        <h2> Wordlas </h2>
+        <h2>Wordlas</h2>
 
-        <!-- It needs proper styling -->
         <div id="game-container">
             <div id="word-grid"></div>
-            <button id="check-word-btn">Check</button>
-            <button id="reset-grid-btn">Reset</button>
+            <div class="button-container">
+                <button id="check-word-btn">Submit</button>
+                <button id="reset-grid-btn">New Game</button>
+            </div>
+            <div class="instructions">
+                <p>Type a 5-letter word and press Enter to submit</p>
+                <p>Green: Correct letter in correct position</p>
+                <p>Yellow: Correct letter in wrong position</p>
+                <p>Gray: Letter not in the word</p>
+            </div>
         </div>
 
         <!-- This is the place for JS scripts -->

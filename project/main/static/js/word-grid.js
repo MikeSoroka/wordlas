@@ -162,6 +162,16 @@ function displayWinMessage() {
     message.classList.add("win-message");
     message.textContent = "Congratulations! You won!";
     document.getElementById("game-container").appendChild(message);
+    
+    // Disable all inputs when game is won
+    const allInputs = document.querySelectorAll('.letter-cell');
+    allInputs.forEach(input => {
+        input.disabled = true;
+    });
+    
+    // Visual effect for winning
+    const currentRow = document.getElementsByClassName("row")[currRow];
+    currentRow.classList.add("winning-row");
 }
 
 function displayLoseMessage() {
@@ -170,6 +180,12 @@ function displayLoseMessage() {
     message.style.color = "#d3112d";
     message.textContent = `Game over. The word was: ${wordOfDay}`;
     document.getElementById("game-container").appendChild(message);
+    
+    // Disable all inputs when game is lost
+    const allInputs = document.querySelectorAll('.letter-cell');
+    allInputs.forEach(input => {
+        input.disabled = true;
+    });
 }
 
 function countLetters(word) {
@@ -192,6 +208,8 @@ function colorWordHints(inputs, userWord) {
     for (let i = 0; i < gridSize.letters; i++) { 
         if (userWord[i] === wordOfDay[i] && letters[userWord[i]] > 0) {
             inputs[i].style.backgroundColor = rightPlaceColor;
+            inputs[i].style.color = "white";
+            inputs[i].style.borderColor = rightPlaceColor;
             letters[userWord[i]]--;
             rightIndices.push(i);
         }
@@ -203,9 +221,13 @@ function colorWordHints(inputs, userWord) {
         
         if (wordOfDay.includes(userWord[i]) && letters[userWord[i]] > 0) {
             inputs[i].style.backgroundColor = includesColor;
+            inputs[i].style.color = "white";
+            inputs[i].style.borderColor = includesColor;
             letters[userWord[i]]--;
         } else {
             inputs[i].style.backgroundColor = defaultColor;
+            inputs[i].style.color = "white";
+            inputs[i].style.borderColor = defaultColor;
         }
         inputs[i].disabled = true;
     }
