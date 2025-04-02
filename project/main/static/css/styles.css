@@ -6,6 +6,14 @@ body {
     background-color: #f5f5f5;
     padding: 20px;
     color: #333;
+    margin: 0;
+}
+
+.main-container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
 }
 
 h2 {
@@ -26,6 +34,7 @@ h2 {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     max-width: 600px;
     width: 100%;
+    margin: 0 auto 30px;
 }
 
 #word-grid {
@@ -35,7 +44,7 @@ h2 {
     margin-bottom: 30px;
 }
 
-.row {
+.game-row {
     display: flex;
     gap: 10px;
 }
@@ -158,11 +167,34 @@ button:active {
 }
 
 /* Highlight the active row */
-.row:has(input:not(:disabled)) {
+.game-row:has(input:not(:disabled)) {
     box-shadow: 0 0 8px rgba(106, 170, 100, 0.5);
     border-radius: 4px;
     padding: 4px;
     background-color: rgba(106, 170, 100, 0.05);
+}
+
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 4px;
+    color: white;
+}
+
+.badge.success {
+    background-color: #6aaa64;
+}
+
+.badge.warning {
+    background-color: #c9b458;
+    color: #333;
+}
+
+.badge.neutral {
+    background-color: #787c7e;
 }
 
 /* Responsive design */
