@@ -1,14 +1,14 @@
 // This is the place for main application logic (initialization, user I/O handling)
-document.addEventListener("DOMContentLoaded", () => {
+$(document).ready(function() {
     // Initialize the game grid
     createGrid();
     
     // Button event listeners
-    document.getElementById("check-word-btn").addEventListener("click", checkWord);
-    document.getElementById("reset-grid-btn").addEventListener("click", resetGrid); 
+    $("#check-word-btn").on("click", checkWord);
+    $("#reset-grid-btn").on("click", resetGrid); 
 
     // Global keyboard event handler
-    document.addEventListener("keydown", (event) => {
+    $(document).on("keydown", function(event) {
         // Submit word with Enter key
         if (event.key === "Enter") {
             event.preventDefault(); // Prevent default form submission behavior
@@ -16,13 +16,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         // If game is over, no keys should be processed except for buttons
-        if (gameOver && !event.target.tagName === 'BUTTON') {
+        if (gameOver && !$(event.target).is('button')) {
             event.preventDefault();
             return;
         }
         
         // Only allow letter input when focused on an input field
-        if (document.activeElement.classList.contains('letter-cell')) {
+        if ($(document.activeElement).hasClass('letter-cell')) {
             const key = event.key.toLowerCase();
             
             // Allow only letters, backspace and arrow keys
