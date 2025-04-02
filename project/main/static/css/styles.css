@@ -174,7 +174,7 @@ button:active {
     background-color: rgba(106, 170, 100, 0.05);
 }
 
-/* Badge styles */
+/* Badge and letter cell color styles */
 .badge {
     display: inline-block;
     padding: 5px 10px;
@@ -184,17 +184,19 @@ button:active {
     color: white;
 }
 
-.badge.success {
+.badge.success, .letter-cell.success {
     background-color: #6aaa64;
+    color: white;
 }
 
-.badge.warning {
+.badge.warning, .letter-cell.warning {
     background-color: #c9b458;
     color: #333;
 }
 
-.badge.neutral {
+.badge.neutral, .letter-cell.neutral {
     background-color: #787c7e;
+    color: white;
 }
 
 /* Responsive design */

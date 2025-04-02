@@ -150,7 +150,7 @@ function animateInvalidWord($row) {
 
 function displayWinMessage() {
     const $message = $('<div></div>')
-        .addClass('win-message alert alert-success')
+        .addClass('win-message')
         .text('Congratulations! You won!');
     $('#game-container').append($message);
     
@@ -163,7 +163,8 @@ function displayWinMessage() {
 
 function displayLoseMessage() {
     const $message = $('<div></div>')
-        .addClass('win-message alert alert-danger')
+        .addClass('win-message')
+        .css('color', '#d32f2f') // Red color for loss message
         .text(`Game over. The word was: ${wordOfDay}`);
     $('#game-container').append($message);
     
@@ -191,8 +192,8 @@ function colorWordHints($inputs, userWord) {
     for (let i = 0; i < gridSize.letters; i++) { 
         if (userWord[i] === wordOfDay[i] && letters[userWord[i]] > 0) {
             $inputs.eq(i)
-                .removeClass('bg-secondary bg-warning')
-                .addClass('bg-success text-white')
+                .removeClass('neutral warning')
+                .addClass('success')
                 .css('border-color', '');
             letters[userWord[i]]--;
             rightIndices.push(i);
@@ -205,14 +206,14 @@ function colorWordHints($inputs, userWord) {
         
         if (wordOfDay.includes(userWord[i]) && letters[userWord[i]] > 0) {
             $inputs.eq(i)
-                .removeClass('bg-secondary bg-success')
-                .addClass('bg-warning text-white')
+                .removeClass('neutral success')
+                .addClass('warning')
                 .css('border-color', '');
             letters[userWord[i]]--;
         } else {
             $inputs.eq(i)
-                .removeClass('bg-warning bg-success')
-                .addClass('bg-secondary text-white')
+                .removeClass('warning success')
+                .addClass('neutral')
                 .css('border-color', '');
         }
         $inputs.eq(i).prop('disabled', true);
