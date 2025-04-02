@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    color: #333;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#word-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+}
+
+.letter-cell {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #d3d6da;
+    border-radius: 4px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    caret-color: transparent;
+}
+
+.letter-cell:focus {
+    outline: none;
+    border-color: #878a8c;
+}
+
+.letter-cell:disabled {
+    cursor: not-allowed;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #6aaa64;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #538d4e;
+}
+
+#reset-grid-btn {
+    background-color: #787c7e;
+}
+
+#reset-grid-btn:hover {
+    background-color: #606366;
+}
+
+.win-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #6aaa64;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Animation for invalid word */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s;
+}
