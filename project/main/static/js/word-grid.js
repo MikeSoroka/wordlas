@@ -19,8 +19,8 @@ function resetGrid() {
     rightGuess = false;
     gameOver = false;
     
-    // Remove win message if it exists
-    $('.win-message').remove();
+    // Remove popup if it exists
+    $('.popup-overlay').remove();
 }
 
 function createGrid() {
@@ -148,11 +148,37 @@ function animateInvalidWord($row) {
     }, 500);
 }
 
-function displayWinMessage() {
+function createPopup(message, isWin) {
+    // Create popup overlay
+    const $overlay = $('<div></div>').addClass('popup-overlay');
+    
+    // Create popup container
+    const $popup = $('<div></div>').addClass('popup-container');
+    
+    // Create close button
+    const $closeButton = $('<div></div>')
+        .addClass('close-popup')
+        .text('×')
+        .on('click', function() {
+            $overlay.remove();
+        });
+    
+    // Create message
     const $message = $('<div></div>')
         .addClass('win-message')
-        .text('Congratulations! You won!');
-    $('#game-container').append($message);
+        .css('color', isWin ? '#6aaa64' : '#d32f2f') // Green for win, red for loss
+        .text(message);
+    
+    // Assemble popup
+    $popup.append($closeButton, $message);
+    $overlay.append($popup);
+    
+    // Add to body (not game container so it's truly on top of everything)
+    $('body').append($overlay);
+}
+
+function displayWinMessage() {
+    createPopup('Congratulations! You won!', true);
     
     // Disable all inputs when game is won
     $('.letter-cell').prop('disabled', true);
@@ -162,11 +188,7 @@ function displayWinMessage() {
 }
 
 function displayLoseMessage() {
-    const $message = $('<div></div>')
-        .addClass('win-message')
-        .css('color', '#d32f2f') // Red color for loss message
-        .text(`Game over. The word was: ${wordOfDay}`);
-    $('#game-container').append($message);
+    createPopup(`Game over. The word was: ${wordOfDay}`, false);
     
     // Disable all inputs when game is lost
     $('.letter-cell').prop('disabled', true);
