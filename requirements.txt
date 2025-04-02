@@ -5,3 +5,4 @@ sqlparse==0.5.3
 typing_extensions==4.12.2
 uuid==1.30
 gunicorn
+whitenoise==6.6.0

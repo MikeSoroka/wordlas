@@ -6,6 +6,9 @@ COPY requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 COPY project /app
 
+# Collect static files
+RUN cd /app && python manage.py collectstatic --noinput
+
 EXPOSE 8000
 EXPOSE 5432
 
