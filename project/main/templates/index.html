@@ -5,23 +5,33 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
-        <!-- This is our CSS -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Wordlas</title>
+        <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head>
 
     <body>
-        <h2> Wordlas </h2>
+        <div class="main-container">
+            <h2>Wordlas</h2>
 
-        <!-- It needs proper styling -->
-        <div id="game-container">
-            <div id="word-grid"></div>
-            <button id="check-word-btn">Check</button>
-            <button id="reset-grid-btn">Reset</button>
+            <div id="game-container">
+                <div id="word-grid"></div>
+                <div class="button-container">
+                    <button id="check-word-btn">Submit</button>
+                    <button id="reset-grid-btn">New Game</button>
+                </div>
+                <div class="instructions">
+                    <p>Type a 5-letter word and press Enter to submit</p>
+                    <p><span class="badge success">Green</span>: Correct letter in correct position</p>
+                    <p><span class="badge warning">Yellow</span>: Correct letter in wrong position</p>
+                    <p><span class="badge neutral">Gray</span>: Letter not in the word</p>
+                </div>
+            </div>
         </div>
 
-        <!-- This is the place for JS scripts -->
-        <script src="{% static 'js/main.js' %}"></script>
+        <!-- This is the place for JS scripts (our custom scripts) -->
         <script src="{% static 'js/word-grid.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
