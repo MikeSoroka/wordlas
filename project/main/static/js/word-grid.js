@@ -1,5 +1,15 @@
 // TEMPORARY SOLUTION; connect to the word database later
-const words = ["LABAS", "GERAI", "KODAS", "VIETA", "IDEJA", "SAULE", "GATVE"]; 
+const words = [
+	'LABAS', 'DIENA', 'NAMAS', 'MEILĖ', 'DUONA',
+	'KATĖS', 'ŠALIS', 'GĖLĖS', 'LAIMĖ', 'ŽEMĖ',
+	'SAULĖ', 'MĖNUO', 'VYRAS', 'KARTU', 'MEDIS',
+	'ŠUNIS', 'KALBA', 'METAI', 'AKMUO', 'RANKA',
+	'TALKA', 'DURYS', 'KNYGA', 'DRĄSA', 'LAPAS',
+	'SODAS', 'GATVĖ', 'KELIO', 'VĖJAS', 'ŽODIS',
+	'VAKAR', 'RYTAS', 'VAIKO', 'DARBO', 'ŠOKIS',
+	'IDĖJA', 'VIETA', 'KODAS', 'GERAI'
+];
+
 
 // grid configuration
 const gridSize = {"tries": 6, "letters": 5};
