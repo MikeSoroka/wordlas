@@ -22,11 +22,12 @@ $(document).ready(function() {
 // Lithuanian keyboard layout with special characters
 const keyboardLayout = [
     ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
-    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
-    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '⌫']
+    ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Ą'],
+    ['ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'Č', '⌫'],
+    ['Ę', 'Ė', 'Į', 'Š', 'Ų', 'Ū', 'Ž']
 ];
 
-// Lithuanian special characters mapping
+// Lithuanian special characters mapping - kept for alternative character input
 const lithuanianChars = {
     'A': ['A', 'Ą'],
     'C': ['C', 'Č'],
@@ -72,8 +73,12 @@ function initKeyboard() {
         $keyboard.append($row);
     });
     
-    // Add keyboard to the page after the game container
-    $('#game-container').append($keyboard);
+    // Add keyboard to the page in a dedicated container after the instructions
+    const $keyboardContainer = $('<div>').attr('id', 'keyboard-container');
+    $keyboardContainer.append($keyboard);
+    
+    // Insert the keyboard container before the closing of game container
+    $('#game-container').append($keyboardContainer);
     
     // Add event listener for physical keyboard
     $(document).on('keydown', handlePhysicalKeyboard);
@@ -89,33 +94,73 @@ function handleKeyClick() {
 
 // Process a key press (virtual or physical)
 function processKey(key) {
-    const $activeInput = $('.letter-cell:not(:disabled):first');
-    const $activeRow = $activeInput.parent();
+    // Find the currently focused input or the first empty input in the active row
+    let $currentInput = $('.letter-cell:focus');
+    const $activeRow = $('.game-row').eq(currRow);
+    const $inputs = $activeRow.find('input');
     
-    if (!$activeInput.length) return;
+    // If no input is focused, find the first empty one in active row
+    if (!$currentInput.length) {
+        const $emptyInputs = $inputs.filter(function() {
+            return $(this).val() === '';
+        });
+        
+        if ($emptyInputs.length > 0) {
+            $currentInput = $emptyInputs.first();
+            $currentInput.focus();
+        } else if ($inputs.filter(':not(:disabled)').length > 0) {
+            // If no empty inputs but row is active, focus on the last input
+            $currentInput = $inputs.filter(':not(:disabled)').last();
+            $currentInput.focus();
+        } else {
+            // No active row inputs found
+            return;
+        }
+    }
     
     if (key === 'ENTER') {
         window.checkWord();
     } else if (key === '⌫') {
-        // Find the last input with a value in the active row
-        const $inputs = $activeRow.find('input');
-        const $filledInputs = $inputs.filter(function() {
-            return $(this).val() !== '';
-        });
-        
-        if ($filledInputs.length > 0) {
-            $filledInputs.last().val('').focus();
+        // If current input is empty, move to previous input and clear it
+        if ($currentInput.val() === '') {
+            const currentIndex = $inputs.index($currentInput);
+            if (currentIndex > 0) {
+                $inputs.eq(currentIndex - 1).focus().val('');
+            }
         } else {
-            $activeInput.focus();
+            // Clear the current input
+            $currentInput.val('').focus();
         }
     } else if (key.length === 1 && key.match(/[A-ZĄČĘĖĮŠŲŪŽ]/i)) {
         // Regular letter input
-        const $currentInput = $('.letter-cell:focus');
+        $currentInput.val(key).trigger('input');
         
-        if ($currentInput.length) {
-            $currentInput.val(key).trigger('input');
-        } else {
-            $activeInput.val(key).trigger('input');
+        // Move to next input after inserting a letter
+        const currentIndex = $inputs.index($currentInput);
+        if (currentIndex < $inputs.length - 1) {
+            setTimeout(function() {
+                $inputs.eq(currentIndex + 1).focus();
+            }, 10); // Small delay to ensure proper focus handling
+        }
+        
+        // Auto-scroll to make sure the active row is visible
+        scrollToActiveRow();
+    }
+}
+
+// Scroll to make the active row visible
+function scrollToActiveRow() {
+    const $activeRow = $('.game-row').eq(currRow);
+    if ($activeRow.length) {
+        const rowPosition = $activeRow.position().top;
+        const windowHeight = $(window).height();
+        const keyboardHeight = $('#virtual-keyboard').outerHeight();
+        
+        // If the active row is too close to the bottom of the viewport, scroll it into better view
+        if (rowPosition > windowHeight - keyboardHeight - 150) {
+            $('html, body').animate({
+                scrollTop: rowPosition - 200
+            }, 200);
         }
     }
 }
@@ -135,6 +180,30 @@ function handlePhysicalKeyboard(event) {
     } else if (key.length === 1 && key.match(/[A-ZĄČĘĖĮŠŲŪŽąčęėįšųūž]/i)) {
         event.preventDefault();
         processKey(key.toUpperCase());
+    } else if (key === 'ARROWRIGHT') {
+        // Handle right arrow key - move to next input
+        event.preventDefault();
+        const $currentInput = $('.letter-cell:focus');
+        if ($currentInput.length) {
+            const $activeRow = $('.game-row').eq(currRow);
+            const $inputs = $activeRow.find('input');
+            const currentIndex = $inputs.index($currentInput);
+            if (currentIndex < $inputs.length - 1) {
+                $inputs.eq(currentIndex + 1).focus();
+            }
+        }
+    } else if (key === 'ARROWLEFT') {
+        // Handle left arrow key - move to previous input
+        event.preventDefault();
+        const $currentInput = $('.letter-cell:focus');
+        if ($currentInput.length) {
+            const $activeRow = $('.game-row').eq(currRow);
+            const $inputs = $activeRow.find('input');
+            const currentIndex = $inputs.index($currentInput);
+            if (currentIndex > 0) {
+                $inputs.eq(currentIndex - 1).focus();
+            }
+        }
     }
 }
 
@@ -518,3 +587,20 @@ processKey = function(key) {
         }
     }
 };
+
+// Override the input handler in word-grid.js to work better with virtual keyboard
+$(document).ready(function() {
+    setTimeout(function() {
+        // Override handleInput to avoid duplicate functionality
+        $('.letter-cell').off('input').on('input', function() {
+            if (window.gameOver) return;
+            
+            const $input = $(this);
+            // Always convert to uppercase
+            $input.val($input.val().toUpperCase());
+            
+            // Do not automatically move focus - let keyboard.js handle this
+            // This prevents conflicts between physical and virtual keyboard handling
+        });
+    }, 600); // Wait a bit longer than keyboard initialization
+});

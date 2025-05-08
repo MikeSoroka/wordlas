@@ -243,9 +243,44 @@ button:active {
     color: white;
 }
 
-/* Validation error styling */
-.error-message {
-    color: #ff0033;
+/* Virtual Keyboard Styles */
+#keyboard-container {
+    width: 100%;
+    padding: 10px 0;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    position: relative;
+    z-index: 100;
+}
+
+#virtual-keyboard {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    user-select: none;
+    display: grid;
+    grid-template-rows: repeat(4, auto);
+    gap: 8px;
+}
+
+.keyboard-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0;
+    gap: 6px;
+}
+
+/* Special styling for the Lithuanian special characters row */
+.keyboard-row:nth-child(4) {
+    padding: 0 10%;
+}
+
+.keyboard-key {
+    height: 58px;
+    min-width: 43px;
+    padding: 0;
+    border-radius: 4px;
+    font-size: 1.1rem;
     font-weight: bold;
     margin: 10px 0;
     padding: 8px;
@@ -270,8 +305,24 @@ button:active {
     animation: shake 0.5s;
 }
 
-/* Responsive design */
-@media (max-width: 600px) {
+/* Responsive design with improved mobile layout */
+/* Fixed keyboard positioning for mobile */
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 240px; /* Provide space for the fixed keyboard */
+    }
+    
+    #keyboard-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #f5f5f5;
+        padding: 10px;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    }
+    
     .letter-cell {
         width: 50px;
         height: 50px;
@@ -284,6 +335,7 @@ button:active {
     
     #game-container {
         padding: 20px 15px;
+        margin-bottom: 0;
     }
     
     .instructions {
@@ -357,6 +409,18 @@ button:active {
     #game-container {
         background-color: #1a1a1b;
         box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    #keyboard-container {
+        border-top-color: #3a3a3c;
+        background-color: #1a1a1b;
+    }
+    
+    @media (max-width: 768px) {
+        #keyboard-container {
+            background-color: #121213;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        }
     }
     
     .letter-cell {
