@@ -17,10 +17,15 @@ const defaultColor = "secondary"; // Bootstrap gray
 const includesColor = "warning";  // Bootstrap yellow
 const rightPlaceColor = "success"; // Bootstrap green
 
+// Expose variables to global scope for keyboard integration
 let wordOfDay = words[Math.floor(Math.random() * words.length)];
 let currRow = 0; // current active row for input
 let rightGuess = false;
 let gameOver = false;
+
+// Make sure these variables are accessible in the global scope
+window.gameOver = gameOver;
+window.checkWord = checkWord;
 
 function resetGrid() {
     createGrid();
@@ -31,6 +36,9 @@ function resetGrid() {
     
     // Remove popup if it exists
     $('.popup-overlay').remove();
+    
+    // Reset keyboard state
+    resetKeyboard();
 }
 
 function createGrid() {
@@ -218,6 +226,7 @@ function countLetters(word) {
 
 function colorWordHints($inputs, userWord) {
     let letters = countLetters(wordOfDay);
+    let results = Array(gridSize.letters).fill('');
 
     // First pass: identify correct positions
     let rightIndices = [];
@@ -229,6 +238,7 @@ function colorWordHints($inputs, userWord) {
                 .css('border-color', '');
             letters[userWord[i]]--;
             rightIndices.push(i);
+            results[i] = 'success';
         }
     }
 
@@ -242,14 +252,19 @@ function colorWordHints($inputs, userWord) {
                 .addClass('warning')
                 .css('border-color', '');
             letters[userWord[i]]--;
+            results[i] = 'warning';
         } else {
             $inputs.eq(i)
                 .removeClass('warning success')
                 .addClass('neutral')
                 .css('border-color', '');
+            results[i] = 'neutral';
         }
         $inputs.eq(i).prop('disabled', true);
     }
+
+    // Update the keyboard display
+    updateKeyboard(userWord, results);
 
     // Check if the word is correct
     if (userWord === wordOfDay) {

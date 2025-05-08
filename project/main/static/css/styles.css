@@ -289,4 +289,123 @@ button:active {
     .instructions {
         font-size: 0.8rem;
     }
+    
+    #virtual-keyboard {
+        gap: 5px;
+    }
+    
+    .keyboard-row {
+        gap: 4px;
+    }
+    
+    .keyboard-key {
+        height: 45px;
+        min-width: 28px;
+        font-size: 0.9rem;
+        padding: 0;
+    }
+    
+    .key-enter, .key-backspace {
+        min-width: 45px;
+        font-size: 0.7rem;
+    }
+    
+    .char-options {
+        top: -35px !important;
+    }
+    
+    .char-option {
+        padding: 6px 8px;
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 380px) {
+    .letter-cell {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .keyboard-key {
+        height: 40px;
+        min-width: 24px;
+        font-size: 0.8rem;
+    }
+    
+    .key-enter, .key-backspace {
+        min-width: 36px;
+        font-size: 0.65rem;
+    }
+    
+    #game-container {
+        padding: 15px 10px;
+    }
+}
+
+/* Dark mode support - will activate if user has dark mode preference */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #121213;
+        color: #d7dadc;
+    }
+    
+    h2 {
+        color: #d7dadc;
+    }
+    
+    #game-container {
+        background-color: #1a1a1b;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+    
+    .letter-cell {
+        border-color: #3a3a3c;
+        color: #d7dadc;
+        background-color: transparent;
+    }
+    
+    .keyboard-key {
+        background-color: #818384;
+        color: #d7dadc;
+    }
+    
+    .keyboard-key:hover {
+        background-color: #6e6e70;
+    }
+    
+    .char-options {
+        background-color: #1a1a1b;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+    
+    .char-option {
+        color: #d7dadc;
+    }
+    
+    .char-option:hover {
+        background-color: #3a3a3c;
+    }
+    
+    .instructions {
+        color: #9e9e9e;
+        border-top-color: #3a3a3c;
+    }
+    
+    /* Button colors for dark mode */
+    button {
+        background-color: #538d4e;
+    }
+    
+    button:hover {
+        background-color: #466f3e;
+    }
+    
+    #reset-grid-btn {
+        background-color: #606366;
+    }
+    
+    #reset-grid-btn:hover {
+        background-color: #48494b;
+    }
 }
