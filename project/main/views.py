@@ -1,18 +1,14 @@
 from django.shortcuts import render
-<<<<<<< HEAD
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import UserRegisterForm, UserLoginForm
 from django.views.decorators.csrf import csrf_exempt
-=======
 from .forms import WordForm
->>>>>>> c7ed89f14e69be9417652edfbc2e7f66e64c60c2
 
 # Create your views here.
 
 def index(request):
-<<<<<<< HEAD
     return render(request, 'index.html')
 
 def register(request):
@@ -44,7 +40,6 @@ def user_login(request):
         form = UserLoginForm()
 
     return render(request, 'login.html', {'form': form})
-=======
     form = WordForm()
     
     if request.method == 'POST':
@@ -55,4 +50,3 @@ def user_login(request):
             form = WordForm()
     
     return render(request, 'index.html', {'form': form})
->>>>>>> c7ed89f14e69be9417652edfbc2e7f66e64c60c2

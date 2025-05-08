@@ -1,5 +1,4 @@
 from django import forms
-<<<<<<< HEAD
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -24,7 +23,6 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'})
     )
-=======
 from django.core.exceptions import ValidationError
 import re
 
@@ -55,4 +53,3 @@ class WordForm(forms.Form):
             raise ValidationError('Žodyje gali būti naudojamos tik lietuviškos raidės.')
         
         return word 
->>>>>>> c7ed89f14e69be9417652edfbc2e7f66e64c60c2
