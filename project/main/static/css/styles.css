@@ -1,12 +1,62 @@
+:root {
+    /* Light Theme (default) */
+    --bg-color: #f5f5f5;
+    --text-color: #333;
+    --container-bg: white;
+    --border-color: #d3d6da;
+    --focus-border: #878a8c;
+    --button-bg: #6aaa64;
+    --button-hover: #538d4e;
+    --reset-button-bg: #787c7e;
+    --reset-button-hover: #606366;
+    --popup-bg: white;
+    --popup-close-bg: #f2f2f2;
+    --popup-close-hover: #e0e0e0;
+    --instructions-color: #666;
+    --border-top: #eee;
+    --shadow-color: rgba(0, 0, 0, 0.15);
+    --success-color: #6aaa64;
+    --warning-color: #c9b458;
+    --neutral-color: #787c7e;
+    --warning-text: #333;
+    --success-text: white;
+    --neutral-text: white;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121213;
+    --text-color: #d7dadc;
+    --container-bg: #2f3135;
+    --border-color: #3a3a3c;
+    --focus-border: #565758;
+    --button-bg: #538d4e;
+    --button-hover: #6aaa64;
+    --reset-button-bg: #565758;
+    --reset-button-hover: #818384;
+    --popup-bg: #2f3135;
+    --popup-close-bg: #3a3a3c;
+    --popup-close-hover: #565758;
+    --instructions-color: #d7dadc;
+    --border-top: #3a3a3c;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --success-color: #538d4e;
+    --warning-color: #b59f3b;
+    --neutral-color: #3a3a3c;
+    --warning-text: #d7dadc;
+    --success-text: #d7dadc;
+    --neutral-text: #d7dadc;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: var(--bg-color);
     padding: 20px;
-    color: #333;
+    color: var(--text-color);
     margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .main-container {
@@ -19,7 +69,7 @@ body {
 h2 {
     margin-bottom: 30px;
     font-size: 3rem;
-    color: #333;
+    color: var(--text-color);
     font-weight: bold;
     letter-spacing: 1px;
 }
@@ -28,13 +78,14 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: var(--container-bg);
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px var(--shadow-color);
     max-width: 600px;
     width: 100%;
     margin: 0 auto 30px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 #word-grid {
@@ -52,7 +103,7 @@ h2 {
 .letter-cell {
     width: 60px;
     height: 60px;
-    border: 2px solid #d3d6da;
+    border: 2px solid var(--border-color);
     border-radius: 4px;
     font-size: 2rem;
     font-weight: bold;
@@ -60,12 +111,14 @@ h2 {
     text-transform: uppercase;
     caret-color: transparent;
     transition: all 0.2s ease;
+    background-color: var(--container-bg);
+    color: var(--text-color);
 }
 
 .letter-cell:focus {
     outline: none;
-    border-color: #878a8c;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border-color: var(--focus-border);
+    box-shadow: 0 0 5px var(--shadow-color);
 }
 
 .letter-cell:disabled {
@@ -85,30 +138,30 @@ button {
     font-weight: bold;
     border: none;
     border-radius: 4px;
-    background-color: #6aaa64;
+    background-color: var(--button-bg);
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 button:hover {
-    background-color: #538d4e;
+    background-color: var(--button-hover);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 button:active {
     transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px var(--shadow-color);
 }
 
 #reset-grid-btn {
-    background-color: #787c7e;
+    background-color: var(--reset-button-bg);
 }
 
 #reset-grid-btn:hover {
-    background-color: #606366;
+    background-color: var(--reset-button-hover);
 }
 
 /* Popup overlay for win/lose message */
@@ -130,10 +183,10 @@ button:active {
     position: relative;
     max-width: 400px;
     width: 90%;
-    background-color: white;
+    background-color: var(--popup-bg);
     padding: 40px 20px 30px;
     border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 25px var(--shadow-color);
     text-align: center;
 }
 
@@ -148,20 +201,20 @@ button:active {
     text-align: center;
     cursor: pointer;
     border-radius: 50%;
-    background-color: #f2f2f2;
-    color: #333;
+    background-color: var(--popup-close-bg);
+    color: var(--text-color);
     transition: all 0.3s ease;
 }
 
 .close-popup:hover {
-    background-color: #e0e0e0;
+    background-color: var(--popup-close-hover);
     transform: scale(1.1);
 }
 
 .win-message {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #6aaa64;
+    color: var(--success-color);
     text-align: center;
     margin-bottom: 20px;
     animation: fadeIn 1s;
@@ -170,10 +223,10 @@ button:active {
 .instructions {
     margin-top: 20px;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--instructions-color);
     text-align: center;
     line-height: 1.5;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-top);
     padding-top: 20px;
     width: 100%;
 }
@@ -229,18 +282,45 @@ button:active {
 }
 
 .badge.success, .letter-cell.success {
-    background-color: #6aaa64;
-    color: white;
+    background-color: var(--success-color);
+    color: var(--success-text);
 }
 
 .badge.warning, .letter-cell.warning {
-    background-color: #c9b458;
-    color: #333;
+    background-color: var(--warning-color);
+    color: var(--warning-text);
 }
 
 .badge.neutral, .letter-cell.neutral {
-    background-color: #787c7e;
+    background-color: var(--neutral-color);
+    color: var(--neutral-text);
+}
+
+/* Validation error styling */
+.error-message {
+    color: #ff0033;
+    font-weight: bold;
+    margin: 10px 0;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: rgba(255, 0, 51, 0.1);
+    text-align: center;
+    display: none;
+}
+
+.badge.important {
+    background-color: #ff0033;
     color: white;
+}
+
+/* Hide the server-side form visually but keep it in the DOM */
+.d-none {
+    display: none;
+}
+
+/* Make validation errors more noticeable */
+.shake {
+    animation: shake 0.5s;
 }
 
 /* Responsive design */
@@ -262,4 +342,35 @@ button:active {
     .instructions {
         font-size: 0.8rem;
     }
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--container-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.theme-toggle svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--text-color);
+    transition: fill 0.3s ease;
 }
