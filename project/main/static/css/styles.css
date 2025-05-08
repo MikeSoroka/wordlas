@@ -374,3 +374,13 @@ button:active {
     fill: var(--text-color);
     transition: fill 0.3s ease;
 }
+
+#logout-button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #c45749;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}

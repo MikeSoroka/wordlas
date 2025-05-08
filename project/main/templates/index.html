@@ -49,6 +49,17 @@
                     <p><span class="badge neutral">Gray</span>: Letter not in the word</p>
                     <p><span class="badge important">Note</span>: Only Lithuanian characters are allowed</p>
                 </div>
+                <br>
+                <br>
+                <div id="user-info">
+					{% if user.is_authenticated %}
+						Logged in as: <strong>{{ user.username }}</strong>
+						<form method="post" action="{% url 'logout' %}" style="display:inline;">
+							{% csrf_token %}
+							<button id="logout-button" type="submit">Logout</button>
+						</form>
+					{% endif %}
+					<p></p>
             </div>
         </div>
 
