@@ -75,22 +75,24 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'wordlas',
-        'USER': 'admin',
-        'PASSWORD': 'PostgresDevPassword',
-        'HOST': 'db',
-        'PORT': '5432',
-        'ATOMIC_REQUESTS': True,
-        'CONN_MAX_AGE': 60,
-        'OPTIONS': {
-            'connect_timeout': 10,
-            'client_encoding': 'UTF8'
-        },
+import dj_database_url
+from decouple import config
+
+DATABASE_URL = config('DATABASE_URL', default=None)
+
+if DATABASE_URL:
+    # Use PostgreSQL in Docker environment
+    DATABASES = {
+        'default': dj_database_url.config(default=DATABASE_URL)
     }
-}
+else:
+    # Use SQLite for local development outside Docker
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation

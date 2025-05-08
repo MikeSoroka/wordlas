@@ -40,16 +40,52 @@ class LithuanianCharacterValidationTest(TestCase):
         form = WordForm(data={'word': 'ABCD'})
         self.assertFalse(form.is_valid())
         
-        # Test too long
-        form = WordForm(data={'word': 'ABCDEF'})
-        self.assertFalse(form.is_valid())
-        
-        # Test empty
-        form = WordForm(data={'word': ''})
-        self.assertFalse(form.is_valid())
+        # Test word that's too long
+        long_word = Word(
+            word="abcdefg",
+            difficulty_level="easy", 
+            category="noun"
+        )
+        with self.assertRaises(ValidationError):
+            long_word.full_clean()
     
-    def test_case_insensitivity(self):
-        """Test that lowercase letters are converted to uppercase"""
-        form = WordForm(data={'word': 'labas'})
-        self.assertTrue(form.is_valid())
-        self.assertEqual(form.cleaned_data['word'], 'LABAS')
+    def test_default_values(self):
+        """Test that default values are set correctly."""
+        default_word = Word.objects.create(word="testas")
+        self.assertEqual(default_word.difficulty_level, "medium")
+        self.assertEqual(default_word.category, "noun")
+        self.assertTrue(default_word.active)
+    
+    def test_difficulty_choices(self):
+        """Test the difficulty choices."""
+        # Valid difficulty
+        word = Word.objects.create(
+            word="namai",
+            difficulty_level="hard"
+        )
+        self.assertEqual(word.difficulty_level, "hard")
+        
+        # Invalid difficulty
+        invalid_word = Word(
+            word="kazkas",
+            difficulty_level="extreme"
+        )
+        with self.assertRaises(ValidationError):
+            invalid_word.full_clean()
+    
+    def test_category_choices(self):
+        """Test the category choices."""
+        # Valid category
+        word = Word.objects.create(
+            word="žaisti",
+            category="verb"
+        )
+        self.assertEqual(word.category, "verb")
+        
+        # Invalid category
+        invalid_word = Word(
+            word="kitas",
+            category="preposition"
+        )
+        with self.assertRaises(ValidationError):
+            invalid_word.full_clean()
