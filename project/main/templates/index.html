@@ -17,6 +17,18 @@
 
             <div id="game-container">
                 <div id="word-grid"></div>
+                
+                <!-- Server-side validation form -->
+                <form method="post" id="word-validation-form" class="d-none">
+                    {% csrf_token %}
+                    {{ form.word }}
+                    <div id="validation-errors" class="error-message">
+                        {% if form.word.errors %}
+                            {{ form.word.errors }}
+                        {% endif %}
+                    </div>
+                </form>
+                
                 <div class="button-container">
                     <button id="check-word-btn">Submit</button>
                     <button id="reset-grid-btn">New Game</button>
@@ -26,12 +38,14 @@
                     <p><span class="badge success">Green</span>: Correct letter in correct position</p>
                     <p><span class="badge warning">Yellow</span>: Correct letter in wrong position</p>
                     <p><span class="badge neutral">Gray</span>: Letter not in the word</p>
+                    <p><span class="badge important">Note</span>: Only Lithuanian characters are allowed</p>
                 </div>
             </div>
         </div>
 
         <!-- This is the place for JS scripts (our custom scripts) -->
         <script src="{% static 'js/word-grid.js' %}"></script>
+        <script src="{% static 'js/lithuanian-validation.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
