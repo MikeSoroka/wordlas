@@ -73,12 +73,12 @@ function initKeyboard() {
         $keyboard.append($row);
     });
     
-    // Add keyboard to the page in a dedicated container after the instructions
+    // Add keyboard to the page in a dedicated container right after word-grid
     const $keyboardContainer = $('<div>').attr('id', 'keyboard-container');
     $keyboardContainer.append($keyboard);
     
-    // Insert the keyboard container before the closing of game container
-    $('#game-container').append($keyboardContainer);
+    // Insert the keyboard container right after the word-grid element
+    $('#word-grid').after($keyboardContainer);
     
     // Add event listener for physical keyboard
     $(document).on('keydown', handlePhysicalKeyboard);
