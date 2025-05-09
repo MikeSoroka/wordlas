@@ -21,16 +21,108 @@ let wordOfDay = words[Math.floor(Math.random() * words.length)];
 let currRow = 0; // current active row for input
 let rightGuess = false;
 let gameOver = false;
+let currentGameId = null; // Track the current game ID
+
+// Get CSRF token from cookie
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Create a new game
+async function createNewGame() {
+    try {
+        const csrftoken = getCookie('csrftoken');
+        if (!csrftoken) {
+            console.error('CSRF token not found');
+            return false;
+        }
+
+        const response = await fetch('/api/game/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            credentials: 'same-origin'  // Include cookies in the request
+        });
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to create game: ${errorText}`);
+        }
+        
+        const data = await response.json();
+        if (!data.id || !data.word) {
+            throw new Error('Invalid response from server');
+        }
+
+        currentGameId = data.id;
+        wordOfDay = data.word;
+        return true;
+    } catch (error) {
+        console.error('Error creating game:', error);
+        return false;
+    }
+}
+
+// End the current game
+async function endGame(finalGuess) {
+    if (!currentGameId) return;
+    
+    try {
+        const csrftoken = getCookie('csrftoken');
+        if (!csrftoken) {
+            console.error('CSRF token not found');
+            return;
+        }
+
+        const response = await fetch('/api/game/', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+            credentials: 'same-origin',  // Include cookies in the request
+            body: JSON.stringify({
+                id: currentGameId,
+                isfinished: true,
+                final_guess: finalGuess
+            })
+        });
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Failed to end game: ${errorText}`);
+        }
+    } catch (error) {
+        console.error('Error ending game:', error);
+    }
+}
 
 function resetGrid() {
     createGrid();
-    wordOfDay = words[Math.floor(Math.random() * words.length)];
-    currRow = 0;
-    rightGuess = false;
-    gameOver = false;
-    
-    // Remove popup if it exists
-    $('.popup-overlay').remove();
+    createNewGame().then(success => {
+        if (success) {
+            currRow = 0;
+            rightGuess = false;
+            gameOver = false;
+            // Remove popup if it exists
+            $('.popup-overlay').remove();
+        } else {
+            alert('Failed to start new game. Please try again.');
+        }
+    });
 }
 
 function createGrid() {
@@ -195,6 +287,17 @@ function displayWinMessage() {
     
     // Visual effect for winning
     $('.game-row').eq(currRow).addClass('winning-row');
+    
+    // Get the winning word
+    const $currentRow = $('.game-row').eq(currRow);
+    const $inputs = $currentRow.find('input');
+    let finalGuess = '';
+    $inputs.each(function() {
+        finalGuess += $(this).val().toUpperCase();
+    });
+    
+    // End the game with the winning word
+    endGame(finalGuess);
 }
 
 function displayLoseMessage() {
@@ -202,6 +305,17 @@ function displayLoseMessage() {
     
     // Disable all inputs when game is lost
     $('.letter-cell').prop('disabled', true);
+    
+    // Get the last attempted word
+    const $currentRow = $('.game-row').eq(currRow - 1);  // Use the last row that was filled
+    const $inputs = $currentRow.find('input');
+    let finalGuess = '';
+    $inputs.each(function() {
+        finalGuess += $(this).val().toUpperCase();
+    });
+    
+    // End the game with the last attempted word
+    endGame(finalGuess);
 }
 
 function countLetters(word) {
@@ -256,3 +370,8 @@ function colorWordHints($inputs, userWord) {
         rightGuess = true;
     }
 }
+
+// Initialize the game when the page loads
+$(document).ready(function() {
+    createNewGame();
+});

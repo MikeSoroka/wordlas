@@ -37,17 +37,30 @@ class Game(models.Model):
 
     def is_won(self):
         """
-        Check if the game was won.
-        You'll need to implement the logic based on your game rules.
+        Check if the game was won by comparing the last guess with the word to guess.
         """
-        # This is a placeholder - implement based on your game logic
-        return self.ended_at is not None and self.guesses.filter(is_correct=True).exists()
+        if not self.ended_at:
+            return False
+            
+        # Get the last guess from the game
+        last_guess = self.guesses.order_by('-created_at').first()
+        if not last_guess:
+            return False
+            
+        # Compare the guess with the word to guess
+        return last_guess.guessed_word.lower() == self.word_to_guess.lower()
 
     def guesses_count(self):
         """
         Get the number of guesses made in the game.
         """
         return self.guesses.count()
+
+    def is_guess_correct(self, guess):
+        """
+        Check if a guess matches the word to guess.
+        """
+        return guess.lower() == self.word_to_guess.lower()
 
 class GuessResultPattern(models.Model):
     class LetterMatch(models.TextChoices):
@@ -62,14 +75,17 @@ class GuessResultPattern(models.Model):
     pattern = models.CharField(
         max_length=5,
         validators=[MinLengthValidator(5)],
-        choices=LetterMatch.choices
-    ),
+        choices=LetterMatch.choices,
+        default='NNNNN',  # Default to all None
+        null=True,  # Allow null temporarily for migration
+        blank=True  # Allow blank temporarily for migration
+    )
 
     class Meta:
         db_table = 'guess_patterns'
 
     def __str__(self):
-        return ''.join(self.pattern)
+        return self.pattern or 'NNNNN'  # Return default if pattern is None
 
 class Guess(models.Model):
     """

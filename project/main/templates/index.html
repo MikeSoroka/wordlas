@@ -41,6 +41,7 @@
                 <div class="button-container">
                     <button id="check-word-btn">Submit</button>
                     <button id="reset-grid-btn">New Game</button>
+                    <button id="stats-btn">Statistics</button>
                 </div>
                 <div class="instructions">
                     <p>Type a 5-letter word and press Enter to submit</p>
@@ -52,10 +53,41 @@
             </div>
         </div>
 
+        <!-- Statistics Modal -->
+        <div id="stats-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-popup">&times;</span>
+                <h3>Your Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="games-played">0</div>
+                        <div class="stat-label">Games Played</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="win-percentage">0%</div>
+                        <div class="stat-label">Win %</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="current-streak">0</div>
+                        <div class="stat-label">Current Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="max-streak">0</div>
+                        <div class="stat-label">Max Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="avg-guesses">0.0</div>
+                        <div class="stat-label">Avg. Guesses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- This is the place for JS scripts (our custom scripts) -->
         <script src="{% static 'js/theme-toggle.js' %}"></script>
         <script src="{% static 'js/word-grid.js' %}"></script>
         <script src="{% static 'js/lithuanian-validation.js' %}"></script>
+        <script src="{% static 'js/statistics.js' %}"></script>
         <script src="{% static 'js/main.js' %}"></script>
     </body>
 </html>
