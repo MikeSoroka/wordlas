@@ -11,13 +11,37 @@
 <body>
     <div class="login-container">
         <h2>Log In</h2>
+        
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
+            {% for field in form %}
+            <div class="form-group">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                <div class="error-message">
+                    {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
             <button type="submit">Sign In</button>
-            <br>
-            <a href="{% url 'register' %}" style="margin-top:10px">New to this app? Register now!</a>
-            <a href="{% url 'index' %}" style="margin-top:10px">Skip this step</a>
+            <div class="links">
+                <a href="{% url 'register' %}">New to this app? Register now!</a>
+                <a href="{% url 'index' %}">Skip this step</a>
+            </div>
         </form>
     </div>
 </body>

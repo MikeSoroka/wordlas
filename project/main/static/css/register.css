@@ -123,3 +123,59 @@ ul.errorlist {
     padding: 0;
 }
 
+/* Style for messages */
+.messages {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* Style for form groups */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Style for error messages */
+.error-message {
+    color: #c62828;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Style for links */
+.links {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.links a {
+    color: #2e2e30;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
