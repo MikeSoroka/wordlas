@@ -8,8 +8,8 @@ $(document).ready(function() {
     // Wait a short time to ensure other elements are initialized
     setTimeout(function() {
         console.log("Initializing keyboard");
-        // Initialize the keyboard
-        initKeyboard();
+        // Initialize keyboard event handlers (keyboard is now static in HTML)
+        initKeyboardHandlers();
         
         // Fetch current game state from API
         fetchGameState();
@@ -37,6 +37,25 @@ const lithuanianChars = {
     'U': ['U', 'Ų', 'Ū'],
     'Z': ['Z', 'Ž']
 };
+
+function initKeyboardHandlers() {
+    // Bind click handlers to all keyboard keys
+    $('.keyboard-key').on('click', handleKeyClick);
+    
+    // Setup long press for keys that have Lithuanian alternatives
+    $('.keyboard-key').each(function() {
+        const $key = $(this);
+        const key = $key.attr('data-key');
+        
+        // Long press handling for Lithuanian characters
+        if (lithuanianChars[key]) {
+            setupLongPress($key, key);
+        }
+    });
+    
+    // Add event listener for physical keyboard
+    $(document).on('keydown', handlePhysicalKeyboard);
+}
 
 // Initialize keyboard UI
 function initKeyboard() {

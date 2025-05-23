@@ -33,6 +33,59 @@
                     <button id="check-word-btn">Submit</button>
                     <button id="reset-grid-btn">New Game</button>
                 </div>
+                
+                <!-- Virtual Keyboard -->
+                <div id="keyboard-container">
+                    <div id="virtual-keyboard">
+                        <!-- First row: ĄČĘĖĮŠŲŪŽ -->
+                        <div class="keyboard-row">
+                            <button class="keyboard-key" data-key="Ą">Ą</button>
+                            <button class="keyboard-key" data-key="Č">Č</button>
+                            <button class="keyboard-key" data-key="Ę">Ę</button>
+                            <button class="keyboard-key" data-key="Ė">Ė</button>
+                            <button class="keyboard-key" data-key="Į">Į</button>
+                            <button class="keyboard-key" data-key="Š">Š</button>
+                            <button class="keyboard-key" data-key="Ų">Ų</button>
+                            <button class="keyboard-key" data-key="Ū">Ū</button>
+                            <button class="keyboard-key" data-key="Ž">Ž</button>
+                        </div>
+                        <!-- Second row: ERTYUIOP -->
+                        <div class="keyboard-row">
+                            <button class="keyboard-key" data-key="E">E</button>
+                            <button class="keyboard-key" data-key="R">R</button>
+                            <button class="keyboard-key" data-key="T">T</button>
+                            <button class="keyboard-key" data-key="Y">Y</button>
+                            <button class="keyboard-key" data-key="U">U</button>
+                            <button class="keyboard-key" data-key="I">I</button>
+                            <button class="keyboard-key" data-key="O">O</button>
+                            <button class="keyboard-key" data-key="P">P</button>
+                        </div>
+                        <!-- Third row: ASDFGHJKL -->
+                        <div class="keyboard-row">
+                            <button class="keyboard-key" data-key="A">A</button>
+                            <button class="keyboard-key" data-key="S">S</button>
+                            <button class="keyboard-key" data-key="D">D</button>
+                            <button class="keyboard-key" data-key="F">F</button>
+                            <button class="keyboard-key" data-key="G">G</button>
+                            <button class="keyboard-key" data-key="H">H</button>
+                            <button class="keyboard-key" data-key="J">J</button>
+                            <button class="keyboard-key" data-key="K">K</button>
+                            <button class="keyboard-key" data-key="L">L</button>
+                        </div>
+                        <!-- Fourth row: ENTER + ZCVBNM + Backspace -->
+                        <div class="keyboard-row">
+                            <button class="keyboard-key key-enter" data-key="ENTER">ENTER</button>
+                            <button class="keyboard-key" data-key="Z">Z</button>
+                            <button class="keyboard-key" data-key="C">C</button>
+                            <button class="keyboard-key" data-key="V">V</button>
+                            <button class="keyboard-key" data-key="B">B</button>
+                            <button class="keyboard-key" data-key="N">N</button>
+                            <button class="keyboard-key" data-key="M">M</button>
+                            <button class="keyboard-key key-backspace" data-key="⌫">⌫</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="instructions">
                     <p>Type a 5-letter word and press Enter to submit</p>
                     <p><span class="badge success">Green</span>: Correct letter in correct position</p>
