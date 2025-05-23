@@ -1,0 +1,21 @@
+{
+  "browser": true,
+  "devel": true,
+  "es6": true,
+  "node": false,
+  "bitwise": false,
+  "camelcase": true,
+  "eqeqeq": true,
+  "indent": 2,
+  "newcap": true,
+  "nomen": false,
+  "plusplus": false,
+  "regexp": true,
+  "white": true,
+  "predef": [
+    "$",
+    "jQuery",
+    "document",
+    "window"
+  ]
+} 

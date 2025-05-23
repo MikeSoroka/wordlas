@@ -6,3 +6,8 @@ typing_extensions==4.12.2
 uuid==1.30
 gunicorn
 whitenoise==6.6.0
+# Linting and formatting tools
+pylint==3.0.3
+black==24.1.1
+isort==5.13.2
+pre-commit==3.6.0

@@ -1,0 +1,13 @@
+{
+  "name": "wordlas",
+  "version": "1.0.0",
+  "description": "Wordlas game application",
+  "scripts": {
+    "lint:js": "jslint project/main/static/js/*.js",
+    "format:js": "prettier --write 'project/main/static/js/*.js'"
+  },
+  "devDependencies": {
+    "jslint": "^0.12.1",
+    "prettier": "^2.8.8"
+  }
+} 

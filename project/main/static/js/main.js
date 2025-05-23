@@ -104,3 +104,27 @@ function syncGameData() {
         localStorage.setItem('needsSync', 'false');
     }
 }
+
+// Function to set cookies
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+// Update theme toggle to save to cookies
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            // Save theme preference in cookies
+            setCookie('theme', currentTheme, 365); // Save for 1 year
+        });
+    }
+});
